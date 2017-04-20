@@ -1,6 +1,9 @@
 from django.shortcuts import render
-from django.http import HttpResponse
 
 
 def index(request):
-    return HttpResponse("HW")
+    s = "!!!"
+    context = {
+        "???": s
+    }
+    return render(request, 'koorsuch/index.html', context)
