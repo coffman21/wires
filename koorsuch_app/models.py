@@ -14,7 +14,7 @@ class Spec(models.Model):
         (u'Пв', u'Сшитый полиэтилен'),
         (u'П', u'Полимерные композиции, не содержащие галогенов')
     )
-    insulation = models.CharField(max_length=100, choices=INSULATION_CHOICES)
+    insulation = models.CharField(max_length=100, choices=INSULATION_CHOICES, default='E')
 
     ARMOR_CHOICES = (
         (u'Г', u'Небронированный'),
@@ -23,7 +23,7 @@ class Spec(models.Model):
         (u'К', u'Броня из круглых стальных оцинкованных проволок'),
         (u'Ка', u'Броня из проволок алюминия или его сплава')
     )
-    armor = models.CharField(max_length=100, choices=ARMOR_CHOICES)
+    armor = models.CharField(max_length=100, choices=ARMOR_CHOICES, default='E')
 
     PROTECTION_CHOICES = (
         (u'В', u'Наружная оболочка из поливинилхлоридного пластиката'),
@@ -31,7 +31,7 @@ class Spec(models.Model):
         (u'Шп', u'Зашитный шланг из полиэтилена'),
         (u'П', u'Наружная оболочка из полимеров, не содержащих галогенов'),
     )
-    protection = models.CharField(max_length=150, choices=PROTECTION_CHOICES)
+    protection = models.CharField(max_length=150, choices=PROTECTION_CHOICES, default="E")
 
     SCREEN_CHOICES = (
         (u'', u'Без экрана'),
@@ -64,15 +64,15 @@ class Spec(models.Model):
         (u'', u'Круглые'),
         (u'П', u'Плоские'),
     )
-    shape = models.CharField(max_length=50, choices=SHAPE_CHOICES)
+    shape = models.CharField(max_length=50, choices=SHAPE_CHOICES, default="E")
 
     IMPLEMENTATION_CHOICES = (
-        (u'о', u'Однопроволочные'),
-        (u'м', u'Многопроволочные'),
-        (u'к', u'Крглые'),
-        (u'с', u'Секторные или сегментные'),
+        (u'ок', u'Однопроволочные круглые'),
+        (u'мк', u'Многопроволочные круглые'),
+        (u'ос', u'Однопроволочные секторные или сегментные'),
+        (u'мс', u'Многопроволочные секторные или сегментные'),
     )
-    implementation = models.CharField(max_length=100, choices=IMPLEMENTATION_CHOICES)
+    implementation = models.CharField(max_length=100, choices=IMPLEMENTATION_CHOICES, default="E")
 
     CLIMATE_CHOICES = (
         (u'У', u'Умеренный климат'),
@@ -87,7 +87,6 @@ class Spec(models.Model):
     climate = models.CharField(max_length=100, choices=CLIMATE_CHOICES, null=True)
 
 
-
 class Cable(models.Model):
     name = models.CharField(max_length=100)
     spec = models.ForeignKey(Spec)
@@ -99,6 +98,32 @@ class Cable(models.Model):
         MaxValueValidator(3),
         MinValueValidator(0)
     ])
-    GAUGE_CHOICES = []
-    # 1,5; 2,5; 4; 6; 10; 16; 25; 35;  50; 70; 95; 120; 150; 185; 240; 300; 400; 500; 625; 630; 800; 1000  мм 2 .
-    gauge = models.FloatField()
+    GAUGE_CHOICES = (
+        (1.5, 1.5),
+        (2.5, 2.5),
+        (4, 4),
+        (6, 6),
+        (10, 10),
+        (16, 16),
+        (25, 25),
+        (35, 35),
+        (50, 50),
+        (70, 70),
+        (95, 95),
+        (120, 120),
+        (150, 150),
+        (185, 185),
+        (240, 240),
+        (300, 300),
+        (400, 400),
+        (500, 500),
+        (625, 625),
+        (630, 630),
+        (800, 800),
+        (1000, 1000)
+    )
+    gauge = models.FloatField(choices=GAUGE_CHOICES, default=0)
+
+    extra_gauge = models.FloatField(choices=GAUGE_CHOICES, null=True)
+
+

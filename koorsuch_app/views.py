@@ -2,8 +2,6 @@ from django.shortcuts import render
 
 
 def index(request):
-    s = "!!!"
-    context = {
-        "???": s
-    }
+
+    context = {}
     return render(request, 'koorsuch/index.html', context)
