@@ -1,4 +1,5 @@
 from django.db import models
+from django.forms import ModelForm
 from django.core.validators import MaxValueValidator, MinValueValidator
 
 from .choices import *
@@ -19,6 +20,9 @@ class Spec(models.Model):
     implementation = models.CharField(max_length=100, choices=IMPLEMENTATION_CHOICES, default="E")
     climate = models.CharField(max_length=100, choices=CLIMATE_CHOICES, null=True)
 
+    def __str__(self):
+        return self.material + self.insulation + self.protection + self.armor + self.screening
+
 
 class Cable(models.Model):
     name = models.CharField(max_length=100)
@@ -34,3 +38,7 @@ class Cable(models.Model):
     gauge = models.FloatField(choices=GAUGE_CHOICES, default=0)
 
     extra_gauge = models.FloatField(choices=GAUGE_CHOICES, blank=True, null=True)
+
+    def __str__(self):
+        return self.name
+

@@ -1,9 +1,12 @@
 from django import forms
+from django.forms import ModelForm
 
 from .models import Cable, Spec
 from .choices import *
 
 
+# following should be redundant
+"""
 class SpecForm(forms.Form):
     material = forms.ChoiceField(choices=MATERIAL_CHOICES, label='материалоо', initial='', required=True)
     insulation = forms.ChoiceField(choices=INSULATION_CHOICES, label='', initial='', required=True)
@@ -38,3 +41,17 @@ class CableForm(forms.Form):
 
     class Meta:
         model = Cable
+
+"""
+
+
+class CableForm(ModelForm):
+    class Meta:
+        model = Cable
+        fields = "__all__"
+
+
+class SpecForm(ModelForm):
+    class Meta:
+        model = Spec
+        fields = '__all__'
